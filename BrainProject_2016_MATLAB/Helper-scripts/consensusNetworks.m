@@ -11,7 +11,7 @@ parfor k=1:length(folderNames)
     filename = dir([dirname '*.mat']);
     filename = filename.name;
     prenom = strsplit(filename, {'_', '.'});
-    prenom = [prenom{1} '_' prenom{2}];
+    prenom = [prenom{1}];
     
     addConsensusNetworks(folderNames{k}, prenom);
     mln_MethodStructuresAUC(folderNames{k}, [prenom '_extended']);

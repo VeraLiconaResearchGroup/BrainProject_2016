@@ -15,5 +15,5 @@ parfor k=1:length(folderNames)
     filename = filename.name;
     
     prenom = strsplit(filename, {'_', '.'});
-    mln_MethodStructuresAUC(folderNames{k},[prenom{2} '_' prenom{3}]); %RN_2, RN
+    mln_MethodStructuresAUC(folderNames{k},prenom{2}); %RN_2, RN
 end
