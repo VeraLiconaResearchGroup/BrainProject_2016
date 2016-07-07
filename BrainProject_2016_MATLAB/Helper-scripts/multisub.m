@@ -6,8 +6,8 @@
 %% Example execution: multisub ADHD 1 70
 % Note: multisub will iterate through every consecutive subject number from the start value to the finish value
 function multisub(name, start, finish)
-  extraZero = '00';
   parfor i=str2num(start):str2num(finish)
+    extraZero = '00';
     if i < 100 & i > 9
         extraZero = '0';
     elseif i >= 100

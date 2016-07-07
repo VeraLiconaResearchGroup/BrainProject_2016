@@ -1,6 +1,6 @@
 GenePoolSize                    1000.00 
   
-NumCandidates                    500.00  
+NumCandidates                    5.00  
  
 mNumParentsToPreserve            20.00  
  
