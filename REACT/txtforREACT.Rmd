@@ -1,0 +1,38 @@
+---
+title: "inputREACT"
+author: "Tiffany Jann"
+date: "July 8, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+<!-- Don't edit in between this line and the one below -->
+```{r include=FALSE}
+## Don't delete this chunk if you are using the DataComputing package
+options(scipen=999)
+```
+<!-- Don't edit the material above this line -->
+Find all applicable files to scrape
+```{r}
+pattern = ".csv"
+
+allfiles = list.files(getwd(), pattern)
+allfiles
+```
+Helper: reads file into a table and then writes it as a .txt file
+```{r}
+getfile = function(filename){
+  table = read.csv(filename, header=FALSE)
+  newname = gsub(".csv", ".txt", filename)
+  write.table(table[1:49,1:204], file=newname, sep="\t", row.names = F, col.names = F)
+}
+```
+Load all files into vectors using helper `getfile`
+```{r}
+sapply(as.vector(allfiles), getfile)
+```
