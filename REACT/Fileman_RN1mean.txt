@@ -9,11 +9,11 @@ P=2; N=49;
 K=ZZ/P;
 R=K[makeVars N];
 
-WT = {"DiscreteData_SF1bikmeans.txt"};
+WT = {"DiscreteData_RN1mean.txt"};
 
 KO = {};
 
-REV = {"RevEng_SF1.txt"};
+REV = {"RevEng_RN1.txt"};
 
 CMPLX = {};
 
@@ -21,7 +21,7 @@ BIO = {};
 
 MODEL = {};
 
-PARAMS = {"Params2.txt"};
+PARAMS = {"Params.txt"};
 
 
 
