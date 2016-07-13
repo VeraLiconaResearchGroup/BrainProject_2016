@@ -4,30 +4,52 @@ function flg=addConsensusNetworks(dirname,prenom)
 
 flg=0; % flg for the error
 
-topTen = {'BCorrD' 'Genie' 'BCohF' 'BCorrU' 'PCohF' 'Tigress' 'BH2U' ...
-         'BH2D' 'BTED' 'BTEU'};
 molecMeths ={'Genie' 'Tigress'};
-exclude = {'AllMethods' 'NeuroMethods' 'MolecBioMethods' 'Top10' 'BCohW' 'PCohW' ...
+
+topK = {'PCorrD', 'PCorrU', 'Genie', 'PH2D', 'BH2D'};
+
+%topTen = {'BCorrD' 'Genie' 'BCohF' 'BCorrU' 'PCohF' 'Tigress' 'BH2U' ...
+%         'BH2D' 'BTED' 'BTEU'};
+
+exclude = {'AllMethods' 'NeuroMethods' 'MolecBioMethods' 'TopK' 'BCohW' 'PCohW' ...
            'pCOH1', 'Connectivity', 'Params'};
+
+% exclude = {'AllMethods' 'NeuroMethods' 'MolecBioMethods' 'Top10' 'BCohW' 'PCohW' ...
+%            'pCOH1', 'Connectivity', 'Params'};
 
 filename1=['./',dirname,'/ToutResults/Tout_',prenom,'.mat'];
 calresult=load(filename1);
 
 fieldname=fieldnames(calresult);
 
-consensustop10=zeros(size(calresult.Connectivity,1));
+consensustopK=zeros(size(calresult.Connectivity,1));
+
+% consensustop10=zeros(size(calresult.Connectivity,1));
 
 count = 0.0;
-for i=1:10
-  methodname = topTen{i};
+
+
+for i=1:length(topK)
+  methodname = topK{i};
   mat = calresult.(methodname);
   if any(isnan(mat(:)))
   else
-      consensustop10 = consensustop10 + mat;
+      consensustopK = consensustopK + mat;
       count = count + 1;
   end
 end
-consensustop10 = consensustop10/double(count);
+consensustopK = consensustopK/double(count);
+
+% for i=1:10
+%   methodname = topTen{i};
+%   mat = calresult.(methodname);
+%   if any(isnan(mat(:)))
+%   else
+%       consensustop10 = consensustop10 + mat;
+%       count = count + 1;
+%   end
+% end
+% consensustop10 = consensustop10/double(count);
 
 molecCount = 0.0;
 brainCount = 0.0;
@@ -60,6 +82,7 @@ consensus2 = consensus2/double(molecCount);
 calresult.('AllMethods') = consensus44;
 calresult.('NeuroMethods') = consensus42;
 calresult.('MolecBioMethods') = consensus2;
-calresult.('Top10') = consensustop10;
+calresult.('TopK') = consensustopK;
+% calresult.('Top10') = consensustop10;
 
 save(['./',dirname,'/ToutResults/Tout_',prenom, '_extended', '.mat'], '-struct', 'calresult');

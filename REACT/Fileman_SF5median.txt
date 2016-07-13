@@ -9,7 +9,7 @@ P=2; N=49;
 K=ZZ/P;
 R=K[makeVars N];
 
-WT = {ÒDiscreteData_SF5median.txt"};
+WT = {"DiscreteData_SF5median.txt"};
 
 KO = {};
 

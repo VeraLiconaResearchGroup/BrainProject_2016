@@ -4,7 +4,7 @@
 % foldername: name of directory for MULAN results to be created
 %% Example execution: genData SF_1fmriCS100S1N204.mat SF_1
 % Note: genData is called by multisub so generally no need to call genData independently
-function genData(filename, foldername)
+function genDatainsilico(filename, foldername)
     fileID=load(['datafolderinsilico/', filename]);
 %      header  = textscan(fileID, '%s', 49);
 %      LFP = textscan(fileID, ['%f', repmat('%f',[1,48])], 204);
@@ -13,5 +13,5 @@ function genData(filename, foldername)
     Connectivity = ones(49,49);
     Params.fs = 0.500;
     save([foldername, '/data/', foldername,'fmriCS100S1N204.mat'], 'LFP', 'Connectivity', 'Params');
-    mln_CalEvaN([foldername],[foldername], 'GenerateData/structureN49L0', 'nmmParams', '49', '1', '204', '1', 'fMRI');
+    mln_CalEvaN([foldername],[foldername], 'GenerateData/structureN5scaleFree1', 'nmmParams', '5', '1', '500', '1', 'fMRI');
 %Examples: mln_CalEvaN pipeline wk6 GenerateData/structureN5L5 nmmParams 49 1 204 1 fMRI
