@@ -22,66 +22,129 @@ includeSourceDocuments()
 
 
 ```{r echo=FALSE}
-str = "
-Genie'      [0.9364]    [0.0414]
-BCorrD'     [0.9338]    [0.0417]
-PCorrD'     [0.9149]    [0.0370]
-BCorrU'     [0.9132]    [0.0684]
-BCohF'      [0.8941]    [0.0890]
-PCohF'      [0.8794]    [0.1035]
-BH2D'       [0.8750]    [0.0627]
-BMITD2'     [0.8689]    [0.0970]
-BH2U'       [0.8544]    [0.1097]
-PH2D'       [0.8474]    [0.0737]
-PCorrU'     [0.8471]    [0.1000]
-Smvar'      [0.8412]    [0.0940]
-Tigress'    [0.8404]    [0.0428]
-BMITD1'     [0.8364]    [0.0993]
-PMITD2'     [0.8307]    [0.0892]
-PH2U'       [0.8206]    [0.1067]
-PMITD1'     [0.8075]    [0.0943]
-BMITU'      [0.8059]    [0.1141]
-dDTF'       [0.7987]    [0.0722]
-hmvar'      [0.7851]    [0.0630]
-pCOH1'      [0.7794]    [0.1205]
-pCOH2'      [0.7794]    [0.1205]
-COH1'       [0.7632]    [0.1391]
-PMITU'      [0.7529]    [0.1304]
-AS'         [0.7368]    [0.1483]
-GGC'        [0.7351]    [0.0633]
-BTEU'       [0.7320]    [0.1433]
-MVAR'       [0.7298]    [0.1445]
-COH2'       [0.7235]    [0.1596]
-DTF'        [0.7123]    [0.0517]
-ffDTF'      [0.7123]    [0.0517]
-PTEU'       [0.7092]    [0.1425]
-DC1'        [0.7066]    [0.0501]
-GPDC'       [0.6996]    [0.0903]
-PDC'        [0.6965]    [0.0928]
-oPDCF'      [0.6912]    [0.0880]
-BTED'       [0.6908]    [0.1487]
-Af'         [0.6890]    [0.0826]
-PTED'       [0.6860]    [0.1397]
-CondGC'     [0.6776]    [0.1758]
-GC'         [0.6741]    [0.1928]
-PGC'        [0.6636]    [0.1880]
-BCohW'      [     0]    [     0]
-PCohW'      [     0]    [     0]
+aucranks = "
+BCorrD'     [387]
+Genie'      [383]
+BCorrU'     [369]
+PCorrD'     [364]
+BCohF'      [342]
+BH2D'       [332]
+PCohF'      [321]
+BMITD2'     [320]
+Tigress'    [303]
+BH2U'       [301]
+PCorrU'     [292]
+Smvar'      [292]
+BMITD1'     [288]
+PH2D'       [285]
+PMITD2'     [272]
+PH2U'       [262]
+BMITU'      [260]
+PMITD1'     [250]
+dDTF'       [249]
+hmvar'      [248]
+pCOH1'      [240]
+pCOH2'      [240]
+COH1'       [225]
+BTEU'       [202]
+PMITU'      [200]
+COH2'       [197]
+AS'         [188]
+MVAR'       [180]
+GGC'        [177]
+PTEU'       [177]
+GPDC'       [166]
+PDC'        [156]
+GC'         [155]
+BTED'       [154]
+DTF'        [147]
+ffDTF'      [147]
+oPDCF'      [147]
+Af'         [143]
+CondGC'     [142]
+PTED'       [141]
+PGC'        [139]
+DC1'        [133]
+BCohW'      [ 20]
+PCohW'      [ 20]
+"
+```
+
+```{r echo=F}
+accranks = "
+BCorrD'     [396]
+Genie'      [385]
+PCorrD'     [378]
+BCohF'      [373]
+PCohF'      [344]
+BH2D'       [334]
+Tigress'    [333]
+BCorrU'     [327]
+PH2D'       [318]
+BMITD2'     [307]
+BH2U'       [304]
+dDTF'       [296]
+PMITD2'     [290]
+BMITD1'     [285]
+PH2U'       [278]
+PCorrU'     [277]
+PMITD1'     [260]
+Smvar'      [237]
+AS'         [234]
+MVAR'       [221]
+BMITU'      [213]
+hmvar'      [204]
+pCOH1'      [204]
+pCOH2'      [204]
+GC'         [201]
+BTEU'       [201]
+PTEU'       [201]
+CondGC'     [191]
+PGC'        [186]
+BTED'       [173]
+COH1'       [169]
+PTED'       [167]
+GGC'        [166]
+PMITU'      [162]
+COH2'       [161]
+GPDC'       [161]
+PDC'        [158]
+DTF'        [140]
+ffDTF'      [140]
+oPDCF'      [137]
+DC1'        [134]
+Af'         [127]
+BCohW'      [ 20]
+PCohW'      [ 20]
 "
 ```
 
 
 ```{r}
-# ans = str_extract_all(str, "\\[0\\.[5-9][0-9]{3}\\](\\s)+\\[0\\.[0-9]{4}\\]")
 
-ans = str_extract_all(str, "0\\.[5-9][0-9]{3}")
+aucval = as.numeric(unlist(str_extract_all(aucranks, "[0-9]{2,3}")))
+aucval
+accval = as.numeric(unlist(str_extract_all(accranks, "[0-9]{2,3}")))
+accval
 
-ans
-ans = as.numeric(unlist(ans))
-ans
-# mean(ans)
+aucname = gsub("[0-9]{2,3}", "", aucranks)
+aucname = str_extract_all(aucname, "[:alnum:]+")
+aucname
+accname = gsub("[0-9]{2,3}", "", accranks)
+accname = str_extract_all(accname, "[:alnum:]+")
+accname
+
+aucDF = data.frame(aucname, aucval)
+colnames(aucDF) <- c("Method", "AucVal")
+head(aucDF)
+
+accDF = data.frame(accname, accval)
+colnames(accDF) <- c("Method", "AccVal")
+head(accDF)
 
 
-
+df = inner_join(aucDF, accDF, by=c("Method"="Method"))
+df$lincomb <- 0.4*df$AccVal + 0.6*df$AucVal
+df[order(-df$lincomb),]
 ```
 

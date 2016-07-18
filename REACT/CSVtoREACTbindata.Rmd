@@ -21,7 +21,7 @@ options(scipen=999)
 <!-- Don't edit the material above this line -->
 
 ```{r}
-df <- read_excel("/Users/jann/Desktop/sf1_median.xlsx", sheet=1, col_names=T)
+df <- read_excel("sf1_median.xlsx", sheet=1, col_names=T)
 dft <- t(df)
 head(dft)
 # df <- read.tcsv("minidataMEAN.XLSX", header=T)
