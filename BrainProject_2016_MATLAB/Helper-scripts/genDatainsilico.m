@@ -10,7 +10,7 @@ function genDatainsilico(filename, foldername)
 %      LFP = textscan(fileID, ['%f', repmat('%f',[1,48])], 204);
     LFP = fileID.LFP;
 %     LFP = LFP';
-    Connectivity = ones(49,49);
+    Connectivity = fileID.Connectivity;
     Params.fs = 0.500;
     save([foldername, '/data/', foldername,'fmriCS100S1N204.mat'], 'LFP', 'Connectivity', 'Params');
     mln_CalEvaN([foldername],[foldername], 'GenerateData/structureN5scaleFree1', 'nmmParams', '5', '1', '500', '1', 'fMRI');

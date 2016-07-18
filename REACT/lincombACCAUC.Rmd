@@ -1,0 +1,87 @@
+---
+title: "linear combination of AUC and ACC"
+author: ""
+date: ""
+output: 
+  html_document:
+    fig_height: 3
+    fig_width: 5
+---
+<!-- Don't edit in between this line and the one below -->
+```{r include=FALSE, echo=FALSE}
+# Don't delete this chunk if you are using the DataComputing package
+library(DataComputing)
+library(stringr)
+
+```
+*Source file* 
+```{r, results='asis', echo=FALSE}
+includeSourceDocuments()
+```
+<!-- Don't edit the material above this line -->
+
+
+```{r echo=FALSE}
+str = "
+Genie'      [0.9364]    [0.0414]
+BCorrD'     [0.9338]    [0.0417]
+PCorrD'     [0.9149]    [0.0370]
+BCorrU'     [0.9132]    [0.0684]
+BCohF'      [0.8941]    [0.0890]
+PCohF'      [0.8794]    [0.1035]
+BH2D'       [0.8750]    [0.0627]
+BMITD2'     [0.8689]    [0.0970]
+BH2U'       [0.8544]    [0.1097]
+PH2D'       [0.8474]    [0.0737]
+PCorrU'     [0.8471]    [0.1000]
+Smvar'      [0.8412]    [0.0940]
+Tigress'    [0.8404]    [0.0428]
+BMITD1'     [0.8364]    [0.0993]
+PMITD2'     [0.8307]    [0.0892]
+PH2U'       [0.8206]    [0.1067]
+PMITD1'     [0.8075]    [0.0943]
+BMITU'      [0.8059]    [0.1141]
+dDTF'       [0.7987]    [0.0722]
+hmvar'      [0.7851]    [0.0630]
+pCOH1'      [0.7794]    [0.1205]
+pCOH2'      [0.7794]    [0.1205]
+COH1'       [0.7632]    [0.1391]
+PMITU'      [0.7529]    [0.1304]
+AS'         [0.7368]    [0.1483]
+GGC'        [0.7351]    [0.0633]
+BTEU'       [0.7320]    [0.1433]
+MVAR'       [0.7298]    [0.1445]
+COH2'       [0.7235]    [0.1596]
+DTF'        [0.7123]    [0.0517]
+ffDTF'      [0.7123]    [0.0517]
+PTEU'       [0.7092]    [0.1425]
+DC1'        [0.7066]    [0.0501]
+GPDC'       [0.6996]    [0.0903]
+PDC'        [0.6965]    [0.0928]
+oPDCF'      [0.6912]    [0.0880]
+BTED'       [0.6908]    [0.1487]
+Af'         [0.6890]    [0.0826]
+PTED'       [0.6860]    [0.1397]
+CondGC'     [0.6776]    [0.1758]
+GC'         [0.6741]    [0.1928]
+PGC'        [0.6636]    [0.1880]
+BCohW'      [     0]    [     0]
+PCohW'      [     0]    [     0]
+"
+```
+
+
+```{r}
+# ans = str_extract_all(str, "\\[0\\.[5-9][0-9]{3}\\](\\s)+\\[0\\.[0-9]{4}\\]")
+
+ans = str_extract_all(str, "0\\.[5-9][0-9]{3}")
+
+ans
+ans = as.numeric(unlist(ans))
+ans
+# mean(ans)
+
+
+
+```
+

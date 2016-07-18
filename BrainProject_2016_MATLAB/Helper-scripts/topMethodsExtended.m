@@ -6,10 +6,10 @@ isub = [d(:).isdir];
 folderNames = {d(isub).name}';
 folderNames(ismember(folderNames,{'.','..'})) = [];
 
-meths = cell.empty(48,0);
-aucs = double.empty(48,0);
-ppv = double.empty(48,0);
-acc = double.empty(48,0);
+meths = cell.empty(53,0);
+aucs = double.empty(53,0);
+ppv = double.empty(53,0);
+acc = double.empty(53,0);
 
 %Average
 for k=1:length(folderNames)
@@ -45,10 +45,10 @@ stds = std(acc, 0, 2);
 disp(result)
 
 
-meths = cell.empty(48,0);
-aucs = int64.empty(48,0);
-ppv = int64.empty(48,0);
-acc = int64.empty(48,0);
+meths = cell.empty(53,0);
+aucs = int64.empty(53,0);
+ppv = int64.empty(53,0);
+acc = int64.empty(53,0);
 
 %Rank
 for k=1:length(folderNames)

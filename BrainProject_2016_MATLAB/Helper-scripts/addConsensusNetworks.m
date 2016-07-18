@@ -6,12 +6,19 @@ flg=0; % flg for the error
 
 molecMeths ={'Genie' 'Tigress'};
 
-topK = {'PCorrD', 'PCorrU', 'Genie', 'PH2D', 'BH2D'};
+topK = {'PCorrD', 'BCohF', 'Genie', 'BCorrD', 'BCorrU'};
 
-%topTen = {'BCorrD' 'Genie' 'BCohF' 'BCorrU' 'PCohF' 'Tigress' 'BH2U' ...
+top10 = {'BCorrD' 'Genie' 'BCohF' 'BCorrU' 'PCohF' 'Tigress' 'BH2U' ...
+        'BH2D' 'BMITD2' 'PCorrD'};
+
+% 2015's top five
+% topK = {'Tigress', 'BCohF', 'Genie', 'BCorrD', 'BCorrU'};
+
+% 2015's top ten
+% top10 = {'BCorrD' 'Genie' 'BCohF' 'BCorrU' 'PCohF' 'Tigress' 'BH2U' ...
 %         'BH2D' 'BTED' 'BTEU'};
 
-exclude = {'AllMethods' 'NeuroMethods' 'MolecBioMethods' 'TopK' 'BCohW' 'PCohW' ...
+exclude = {'AllMethods' 'NeuroMethods' 'MolecBioMethods' 'TopK' 'Top10' 'BCohW' 'PCohW' ...
            'pCOH1', 'Connectivity', 'Params'};
 
 % exclude = {'AllMethods' 'NeuroMethods' 'MolecBioMethods' 'Top10' 'BCohW' 'PCohW' ...
@@ -22,9 +29,18 @@ calresult=load(filename1);
 
 fieldname=fieldnames(calresult);
 
-consensustopK=zeros(size(calresult.Connectivity,1));
 
-% consensustop10=zeros(size(calresult.Connectivity,1));
+consensustopKmean=zeros(size(calresult.Connectivity,1));
+
+consensustopKmedian=zeros(size(calresult.Connectivity,1));
+
+consensustop10mean=zeros(size(calresult.Connectivity,1));
+
+consensustop10median=zeros(size(calresult.Connectivity,1));
+
+consensustop10meanDIAG=zeros(size(calresult.Connectivity,1));
+
+consensustop10medianDIAG=zeros(size(calresult.Connectivity,1));
 
 count = 0.0;
 
@@ -34,22 +50,79 @@ for i=1:length(topK)
   mat = calresult.(methodname);
   if any(isnan(mat(:)))
   else
-      consensustopK = consensustopK + mat;
+      mat = abs(mat);
+      consensustopKmean = consensustopKmean + mat;
       count = count + 1;
   end
 end
-consensustopK = consensustopK/double(count);
+consensustopKmean = consensustopKmean/double(count);
+
+count = 0.0;
+for i=1:10
+  methodname = top10{i};
+  mat = calresult.(methodname);
+  if any(isnan(mat(:)))
+  else
+      mat = abs(mat);
+      consensustop10mean = consensustop10mean + mat;
+      count = count + 1;
+  end
+end
+consensustop10mean = consensustop10mean/double(count);
+
+count = 0.0;
+for i=1:10
+  methodname = top10{i};
+  mat = calresult.(methodname);
+  if any(isnan(mat(:)))
+  else
+      mat = abs(mat);
+      consensustop10meanDIAG = consensustop10meanDIAG + mat;
+      count = count + 1;
+  end
+end
+consensustop10meanDIAG = consensustop10meanDIAG/double(count);
+consensustop10meanDIAG = consensustop10meanDIAG - diag(diag(consensustop10meanDIAG));
 
 % for i=1:10
-%   methodname = topTen{i};
+%   methodname = top10{i};
 %   mat = calresult.(methodname);
+% %   mat = mat - diag(diag(mat));
 %   if any(isnan(mat(:)))
 %   else
-%       consensustop10 = consensustop10 + mat;
+%       mat = abs(mat);
+%       consensustop10meanDIAG = consensustop10meanDIAG + mat;
 %       count = count + 1;
 %   end
 % end
-% consensustop10 = consensustop10/double(count);
+% consensustop10meanDIAG = consensustop10meanDIAG/double(count);
+% % consensustop10meanDIAG = consensustop10meanDIAG - diag(diag(consensustop10meanDIAG));
+
+listMethodEntries = zeros(length(topK),1) % dummy vector k1 k2 k3 k4 k5
+for i=1:numel(consensustopKmedian) % for each entry in the 49 x 49 that we need to fill
+    for j=1:length(listMethodEntries) % recreate the dummy vector with corresponding values
+        listMethodEntries(j) = calresult.(topK{j})(i)
+    end
+    consensustopKmedian(i) = median(abs(listMethodEntries))
+end
+
+listMethodEntries = zeros(length(top10),1) % dummy vector k1 k2 k3 k4 k5
+for i=1:numel(consensustop10median) % for each entry in the 49 x 49 that we need to fill
+    for j=1:length(listMethodEntries) % recreate the dummy vector with corresponding values
+        listMethodEntries(j) = calresult.(top10{j})(i)
+    end
+    consensustop10median(i) = median(abs(listMethodEntries))
+end
+
+listMethodEntries = zeros(length(top10),1) % dummy vector k1 k2 k3 k4 k5
+for i=1:numel(consensustop10medianDIAG) % for each entry in the 49 x 49 that we need to fill
+    for j=1:length(listMethodEntries) % recreate the dummy vector with corresponding values
+        listMethodEntries(j) = calresult.(top10{j})(i)
+    end
+    consensustop10medianDIAG(i) = median(abs(listMethodEntries))
+    consensustop10medianDIAG = consensustop10medianDIAG - diag(diag(consensustop10medianDIAG))
+end
+
 
 molecCount = 0.0;
 brainCount = 0.0;
@@ -63,6 +136,7 @@ for i=1:length(fieldname)
   
   if ismember(methodname, exclude) | any(isnan(mat(:)))
   else
+      mat = abs(mat);
       if ismember(methodname, molecMeths)
           consensus2 = consensus2+mat;
           molecCount = molecCount + 1;
@@ -82,7 +156,11 @@ consensus2 = consensus2/double(molecCount);
 calresult.('AllMethods') = consensus44;
 calresult.('NeuroMethods') = consensus42;
 calresult.('MolecBioMethods') = consensus2;
-calresult.('TopK') = consensustopK;
-% calresult.('Top10') = consensustop10;
+calresult.('TopKmean') = consensustopKmean;
+calresult.('TopKmedian') = consensustopKmedian;
+calresult.('Top10mean') = consensustop10mean;
+calresult.('Top10median') = consensustop10median;
+calresult.('Top10meanDIAG') = consensustop10meanDIAG;
+calresult.('Top10medianDIAG') = consensustop10medianDIAG;
 
 save(['./',dirname,'/ToutResults/Tout_',prenom, '_extended', '.mat'], '-struct', 'calresult');

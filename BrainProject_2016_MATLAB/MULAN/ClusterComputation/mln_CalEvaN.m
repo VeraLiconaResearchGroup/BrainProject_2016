@@ -4,7 +4,7 @@ function mln_CalEvaN(dirname,prenom,strfile,paramsfile,nc,is,npts,cs,models)
 % dirname: the folder to store all files
 % prenom: spectial name for new datasets
 % strfile: the file stores the structures
-% Paramsfile: the params used in the calucation
+% Paramsfile: the params used in the calculation
 % nc: the channels of data
 % is: which structure stored in the structure file
 % npts: length of data

@@ -1,0 +1,38 @@
+---
+title: "REACT score"
+author: ""
+date: ""
+output: 
+  html_document:
+    fig_height: 3
+    fig_width: 5
+---
+<!-- Don't edit in between this line and the one below -->
+```{r include=FALSE, echo=FALSE}
+# Don't delete this chunk if you are using the DataComputing package
+library(DataComputing)
+library(stringr)
+
+```
+*Source file* 
+```{r, results='asis', echo=FALSE}
+includeSourceDocuments()
+```
+<!-- Don't edit the material above this line -->
+
+
+```{r echo=FALSE}
+str = "
+
+"
+```
+
+
+```{r}
+# str = "score: 0.1628205"
+ans = str_extract_all(str, "0\\.[0-9]{3,}")
+ans = as.numeric(unlist(ans))
+mean(ans)
+
+```
+
