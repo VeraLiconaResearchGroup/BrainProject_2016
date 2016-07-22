@@ -10,11 +10,11 @@ StableGenerationLimit            5.00
 
 MutateProbability                0.90   
 
-HammingPolyWeight                0.55  
+HammingPolyWeight                0.1  
  
-ComplexityWeight                 0.05  
+ComplexityWeight                 0.7  
  
-RevEngWeight                     0.4  
+RevEngWeight                     0.2  
  
 BioProbWeight                    0  
  
