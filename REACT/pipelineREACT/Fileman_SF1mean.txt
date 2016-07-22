@@ -2,7 +2,7 @@ This file is made to check the behavior of the g.a. (no errors or omissions are 
 
 needs "fds.m2"
 needs "Points.m2"
-
+a
 
 P=2; N=49;
 

@@ -27,9 +27,10 @@ allfiles
 Helper: reads file into a table and then writes it as a .txt file
 ```{r}
 getfile = function(filename){
-  table = read.csv(filename, header=FALSE)
+  table = read.csv(filename, header=FALSE)[1:49, 1:204]
+  transposed = t(table)
   newname = gsub(".csv", ".txt", filename)
-  write.table(table[1:49,1:204], file=newname, sep="\t", row.names = F, col.names = F)
+  write.table(transposed, file=newname, sep="\t", row.names = F, col.names = F)
 }
 ```
 Load all files into vectors using helper `getfile`
