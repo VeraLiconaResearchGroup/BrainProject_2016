@@ -6,7 +6,6 @@
 %% Example execution: multisub SF 1 5
 % Note: multisub will iterate through every consecutive subject number from the start value to the finish value
 function multisubinsilico(name, start, finish)
-  
   parfor i=str2num(start):str2num(finish)
 
     foldername = [name, '_', num2str(i)];

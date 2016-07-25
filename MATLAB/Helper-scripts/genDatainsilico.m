@@ -12,6 +12,6 @@ function genDatainsilico(filename, foldername)
 %     LFP = LFP';
     Connectivity = fileID.Connectivity;
     Params.fs = 0.500;
-    save([foldername, '/data/', foldername,'fmriCS100S1N204.mat'], 'LFP', 'Connectivity', 'Params');
-    mln_CalEvaN([foldername],[foldername], 'GenerateData/structureN5scaleFree1', 'nmmParams', '5', '1', '500', '1', 'fMRI');
+    save([foldername, '/data/', foldername,'fmriCS100S1N204.mat'], 'LFP', 'Connectivity', 'Params'); %do not change: fmri... is necessary so mln_CalEvaN doesn't generate new data
+    mln_CalEvaN_priordata([foldername],[foldername], 'GenerateData/structureN49scaleFree1', 'nmmParams', '49', '1', '204', '1', 'fMRI'); %dummy line since not generating new data
 %Examples: mln_CalEvaN pipeline wk6 GenerateData/structureN5L5 nmmParams 49 1 204 1 fMRI
