@@ -1,0 +1,31 @@
+---
+title: "csv to latex"
+author: "Tiffany Jann"
+date: "July 8, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+<!-- Don't edit in between this line and the one below -->
+```{r include=FALSE}
+## Don't delete this chunk if you are using the DataComputing package
+options(scipen=999)
+library(xtable)
+library(DataComputing)
+```
+<!-- Don't edit the material above this line -->
+
+```{r}
+filename = "sampleinferencemethodoutput.csv"
+```
+
+```{r}
+table = read.csv(filename, header=FALSE)
+table
+print(xtable(table, digits=4), type="latex", include.rownames=FALSE, file="output.tex")
+```
