@@ -1,0 +1,45 @@
+---
+title: "Consensus Network Results Analysis"
+author: ""
+date: ""
+output: 
+  html_document:
+    fig_height: 3
+    fig_width: 5
+---
+<!-- Don't edit in between this line and the one below -->
+```{r include=FALSE}
+# Don't delete this chunk if you are using the DataComputing package
+library(DataComputing)
+```
+*Source file* 
+```{r, results='asis', echo=FALSE}
+includeSourceDocuments()
+```
+<!-- Don't edit the material above this line -->
+
+```{r}
+filename = "/Users/jann/github/BrainProject_2016/Consensus Networks/staticnetworkresults.csv"
+table = read.csv(filename, header=TRUE)
+table = table[grepl("[0-9]{1,2}[AB][0-9]{1,2}", table[,1]),]
+table
+head(table)
+df = table %>% extractMatches("([0-9]{1,2})[AB][0-9]", X) %>% extractMatches("[0-9]{1,2}([AB])[0-9]", X) %>% extractMatches("[0-9]{1,2}[AB]([0-9]{1,2})", X)
+colnames(df) <- c("OG", "AUC", "ACC", "sum", "AUCweight", "MeanOrMedian", "TopK")
+
+head(df)
+findbestOperation = df %>% group_by(MeanOrMedian) %>% summarise(mean(AUC))
+findbestOperation
+```
+
+```{r}
+meanOnly = df %>% filter(MeanOrMedian=="A")
+meanOnly
+```
+
+```{r}
+findbestWeight = meanOnly %>% group_by(AUCweight) %>% summarise(mean(AUC))
+findbestWeight
+findbestTop = meanOnly %>% group_by(TopK) %>% summarise(mean(AUC))
+findbestTop
+```
