@@ -1,4 +1,4 @@
-function mln_calcMatMITime(Resultfile,VMethlog,lfp,params)
+function mln_calcMatMITime_priordata(Resultfile,VMethlog,lfp,params)
 
 %% to calculate the connectivity matrix for Mvar_based methods in Methlog
 % Methlog:  'MVAR': MVAR
@@ -9,20 +9,7 @@ else
     Methlog=VMethlog;
 end
 NMlog=length(Methlog);
-if exist(Resultfile,'file')
-    Rconnect=load(Resultfile);
-    oddfieldname=fieldnames(Rconnect);
-    if  ~isempty(find(strncmpi(oddfieldname,Methlog,NMlog)==1,1))% if there is results about 'Methlog'
-                                                                 % try to find the results with the same parameters
-        Nmethlog=length(Rconnect.(Methlog));
-        for i=1:Nmethlog
-            if mln_compareparams(Rconnect.(Methlog)(i).Params,params)  
-                %Net=Rconnect.(Methlog)(i);
-                return;
-            end
-        end
-    end
-end
+
 %% if there is not the result then calculate
 
 [Nchannel, Ntime]=size(lfp);

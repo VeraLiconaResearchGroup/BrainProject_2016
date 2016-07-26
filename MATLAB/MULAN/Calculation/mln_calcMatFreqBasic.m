@@ -5,8 +5,8 @@ function mln_calcMatFreqBasic(Resultfile,VMethlog,lfp,params)
 Methlog=char(VMethlog{1});
 NMlog=length(Methlog);
 if exist(Resultfile,'file')
-Rconnect=load(Resultfile);
-oddfieldname=fieldnames(Rconnect);
+    Rconnect=load(Resultfile);
+    oddfieldname=fieldnames(Rconnect);
 if  ~isempty(find(strncmpi(oddfieldname,Methlog,NMlog)==1,1))% if there is results about 'Methlog'
    % try to find the results with the same parameters
    Nmethlog=length(Rconnect.(Methlog));
