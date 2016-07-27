@@ -43,3 +43,12 @@ findbestWeight
 findbestTop = meanOnly %>% group_by(TopK) %>% summarise(mean(AUC))
 findbestTop
 ```
+
+```{r}
+library(gridExtra)
+jpeg("WeightedSumResults.jpg")
+grid.table(findbestWeight)
+dev.off()
+
+```
+
