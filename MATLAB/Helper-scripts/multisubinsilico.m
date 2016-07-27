@@ -8,7 +8,7 @@
 function multisubinsilico(name, start, finish)
   parfor i=str2num(start):str2num(finish)
 
-    foldername = [name, '_', num2str(i)];
+    foldername = [name, num2str(i)];
     mkdir(foldername);
     dir = [foldername];
     mkdir(dir, 'AUC');

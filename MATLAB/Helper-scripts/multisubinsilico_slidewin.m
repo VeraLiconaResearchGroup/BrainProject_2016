@@ -3,19 +3,21 @@
 % name: name of the data
 % start: # of first subject
 % finish: # of last subject
-%% Example execution: multisub SF 1 5
+% winlength: sliding window length
+% winoverlap: sliding window overlap
+%% Example execution: multisubinsilico_slidewin SF 1 5
 % Note: multisub will iterate through every consecutive subject number from the start value to the finish value
 function multisubinsilico_slidewin(name, start, finish, winlength, winoverlap)
 winlength = str2num(winlength);
 winoverlap = str2num(winoverlap);
-  parfor i=str2num(start):str2num(finish)
+  parfor i=str2num(start):str2num(finish) % for each subject
     t = 1;
     wincount=1;
     t_end = winlength;
     
-    while (t_end <= 204)
-        OGdatafile = [name, '_', num2str(i)];
-        foldername = [name, '_', num2str(i), '_', 'L', num2str(winlength), 'O', num2str(winoverlap), 'win', num2str(t)];
+    while (t_end <= 204) % run across time series
+        OGdatafile = [name, num2str(i)];
+        foldername = [name, num2str(i), '_', 'L', num2str(winlength), 'O', num2str(winoverlap), 'win', num2str(t)];
         mkdir(foldername);
         dir = [foldername];
         mkdir(dir, 'AUC');
