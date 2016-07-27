@@ -12,6 +12,15 @@ function genDatainsilico(filename, foldername)
 %     LFP = LFP';
     Connectivity = fileID.Connectivity;
     Params.fs = 0.500;
-    save([foldername, '/data/', foldername,'fmriCS100S1N204.mat'], 'LFP', 'Connectivity', 'Params'); %do not change: fmri... is necessary so mln_CalEvaN doesn't generate new data
-    mln_CalEvaN_priordata([foldername],[foldername], 'GenerateData/structureN49scaleFree1', 'nmmParams', '49', '1', '204', '1', 'fMRI'); %dummy line since not generating new data
+    save([foldername, '/data/', filename], 'LFP', 'Connectivity', 'Params'); %do not change: fmri... is necessary so mln_CalEvaN doesn't generate new data
+    
+% This is Tiffany trying to avoid calling mln_CalEvaN of any sort    
+    VGroupMethlog={'TimeBasic','FreqBasic','Hsquare','FreqAH','MutualInform','TE', 'Genie', 'Tigress'};
+    strfile1=which(['nmmParams','.mat']);
+    copyfile (strfile1, ['./',foldername]);
+
+    MULANCalMUltiBP(foldername,foldername,'nmmParams',VGroupMethlog);
+    mln_MethodStructuresAUC(foldername,foldername);
+    
+   % mln_CalEvaN_priordata([foldername],[foldername], 'GenerateData/structureN49scaleFree1', 'nmmParams', '49', '1', '204', '1', 'fMRI'); %dummy line since not generating new data
 %Examples: mln_CalEvaN pipeline wk6 GenerateData/structureN5L5 nmmParams 49 1 204 1 fMRI

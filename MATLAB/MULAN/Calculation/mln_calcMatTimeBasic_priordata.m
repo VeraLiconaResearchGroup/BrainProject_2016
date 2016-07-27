@@ -1,4 +1,6 @@
 function mln_calcMatTimeBasic_priordata(Resultfile,VMethlog,lfp,params)
+
+
 %% to calculate the connectivity matrix for Time Basic methods in Methlog
 % Methlog:  'DCorrSym','DCorrDir','PCorrSym','PCorrDir'
 % Huifang Wang, June 8, 2012, Inserm U1106, Marseille
@@ -7,7 +9,7 @@ NMlog=length(Methlog);
 if exist(Resultfile,'file')
 Rconnect=load(Resultfile);
 oddfieldname=fieldnames(Rconnect);
-
+end
 %% if there is not the result then calculate
 
 [Nchannel, Ntime]=size(lfp);

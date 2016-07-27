@@ -1,5 +1,5 @@
 
-function mln_CalEvaN(dirname,prenom,strfile,paramsfile,nc,is,npts,cs,models)
+function mln_CalEvaN_exist(dirname,prenom,strfile,paramsfile,nc,is,npts,cs,models)
 % Generate the data, calucate the connection methods by all given methods and evalution the results by AUC.
 % dirname: the folder to store all files
 % prenom: spectial name for new datasets
@@ -75,5 +75,6 @@ switch models
                                     is,cs,0,0,1);
 end
 
-MULANCalMUltiBP(dirname,dataname,paramsfile,VGroupMethlog);
+MULANCalMUltiBP_exist(dirname,dataname,paramsfile,VGroupMethlog);
+
 mln_MethodStructuresAUC(dirname,dataname);

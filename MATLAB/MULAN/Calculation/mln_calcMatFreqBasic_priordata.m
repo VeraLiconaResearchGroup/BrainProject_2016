@@ -1,4 +1,6 @@
 function mln_calcMatFreqBasic_priordata(Resultfile,VMethlog,lfp,params)
+
+
 %% to calculate the connectivity matrix for FreqBasic methods in Methlog
 
 % Huifang Wang, June 9, 2012, Inserm U1106, Marseille

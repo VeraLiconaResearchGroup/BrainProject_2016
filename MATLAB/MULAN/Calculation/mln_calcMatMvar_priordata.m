@@ -1,4 +1,5 @@
 function mln_calcMatMvar_priordata(Resultfile,VMethlog,lfp,params)
+
 %% to calculate the connectivity matrix for Mvar_based methods in Methlog
 % Methlog:  'MVAR': MVAR
 % Huifang Wang, May 28, 2012, Inserm U1106, Marseille
