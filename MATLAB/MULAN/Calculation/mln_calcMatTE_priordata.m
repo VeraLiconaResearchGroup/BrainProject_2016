@@ -1,6 +1,5 @@
 function mln_calcMatTE_priordata(Resultfile,VMethlog,lfp,params)
 
-
 % Huifang Wang, Nov 8, 2013, Inserm U1106, Marseille
 if iscell(VMethlog)
     Methlog=char(VMethlog{1});
