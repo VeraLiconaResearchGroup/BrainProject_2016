@@ -1,0 +1,55 @@
+---
+title: "Consensus Network Results Analysis"
+author: ""
+date: ""
+output: 
+  html_document:
+    fig_height: 3
+    fig_width: 5
+---
+```{r include=FALSE}
+library(DataComputing)
+```
+
+To use this script, make sure your CSV file follows the format of the file located in `/Users/jann/github/BrainProject_2016/Consensus Networks/staticnetworkresults.csv`. 
+
+Variable inputs
+```{r}
+filename = "/Users/jann/github/BrainProject_2016/ConsensusNetworks/staticnetworkresults.csv"
+```
+
+
+Reads the CSV file into a table. Keeps only the entries whose first column follows the pattern [1 or 2 numerical values][A or B][1 or 2 numerical values]. In essence, this gets rid of the non-consensus network entries.
+```{r}
+table = read.csv(filename, header=TRUE)
+table = table[grepl("[0-9]{1,2}[AB][0-9]{1,2}", table[,1]),]
+table
+head(table)
+df = table %>% extractMatches("([0-9]{1,2})[AB][0-9]", X) %>% extractMatches("[0-9]{1,2}([AB])[0-9]", X) %>% extractMatches("[0-9]{1,2}[AB]([0-9]{1,2})", X)
+colnames(df) <- c("OG", "AUC", "ACC", "sum", "AUCweight", "MeanOrMedian", "TopK")
+
+head(df)
+findbestOperation = df %>% group_by(MeanOrMedian) %>% summarise(mean(AUC))
+findbestOperation
+```
+
+```{r}
+meanOnly = df %>% filter(MeanOrMedian=="A")
+meanOnly
+```
+
+```{r}
+findbestWeight = meanOnly %>% group_by(AUCweight) %>% summarise(mean(AUC))
+findbestWeight
+findbestTop = meanOnly %>% group_by(TopK) %>% summarise(mean(AUC))
+findbestTop
+```
+
+```{r}
+library(gridExtra)
+jpeg("WeightedSumResults.jpg")
+grid.table(findbestWeight)
+dev.off()
+
+```
+

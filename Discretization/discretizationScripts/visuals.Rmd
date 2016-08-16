@@ -1,0 +1,120 @@
+---
+title: "Case Study: Graphical Comparison of Raw and Booleanized Data"
+author: "Tiffany Jann"
+date: ""
+output: 
+  html_document:
+    fig_height: 3
+    fig_width: 5
+---
+```{r include=FALSE}
+library(DataComputing)
+options(scipen=999)
+```
+
+Variable inputs:
+```{r}
+## Determine how many time points you want to look at
+alpha = 10
+## Up to/ which node do you want to look at?
+# beta = 1
+## Gold Standard Network
+goldFile = "ADHD_Sub010fmri.csv"
+# goldFile = "wk4RNv2fmri.csv"
+isPatientData = T
+## Discretized Results
+method = "ADHD_Sub010_mean.csv"
+# method = "wk4RNv2_bikmeans.csv"
+```
+
+Helper: reads and transposes data table
+```{r}
+read.tcsv = function(file, header=TRUE, sep=",", ...) {
+
+  n = max(count.fields(file, sep=sep), na.rm=TRUE)
+  x = readLines(file)
+
+  .splitvar = function(x, sep, n) {
+    var = unlist(strsplit(x, split=sep))
+    length(var) = n
+    return(var)
+  }
+
+  x = do.call(cbind, lapply(x, .splitvar, sep=sep, n=n))
+  x = apply(x, 1, paste, collapse=sep) 
+  out = read.csv(text=x, sep=sep, header=header)
+  return(out)
+}
+```
+
+Load and normalize original network
+```{r}
+## If in silico data, header=F, else header=T
+gold = read.tcsv(goldFile, header=isPatientData)
+discretized = read.tcsv(method, header=T)
+discretized = na.omit(discretized[,-1])
+if(max(discretized) > 1){
+    discretized = discretized - max(discretized) + 1
+  }
+if(nrow(gold) != nrow(discretized)){
+  print("TSD or Erdal's detected")
+  gold = as.data.frame(apply(gold, 2, diff))[1:alpha,]
+  gold = gold - min(gold)
+  gold = gold / (max(gold) - min(gold))
+  ymin = 0
+  ymax = 1
+  # ymin = -2.5
+  # ymax = 2.5
+} else{
+  print("Time Point Data")
+  gold = gold[1:alpha,]
+  gold = gold - min(gold)
+  gold = gold / (max(gold) - min(gold))
+  ymin = 0
+  ymax = 1
+}
+discretized = discretized[1:alpha,]
+```
+
+Create a plottable data frame with all necessary information
+```{r}
+plotter = function(Raw, Binary, node, Time){
+  Raw = gold[[node]]
+  Binary = discretized[[node]]
+  dfRaw = data.frame(Time, Raw)
+  dfbin = data.frame(Time, Binary)
+  df = data.frame(Time, Raw, Binary)
+  df = df %>% gather(datatype, Value, c(Raw, Binary))
+  plot = ggplot(df, aes(x = Time, y = Value)) + geom_point(aes(color=datatype)) + geom_line(data=dfRaw, aes(x=Time, y=Raw), color="blue") + geom_line(data=dfbin, aes(x=Time, y=Binary), color="red") + geom_area(data=dfRaw, aes(x=Time, y=Raw), alpha=0.5, fill="blue") + geom_area(data=dfbin, aes(x=Time, y=Binary), alpha=0.5, fill="red") + ylim(ymin, ymax) +  scale_x_continuous(breaks=seq(1,alpha,2)) +
+  theme(
+    axis.text = element_text(size = rel(1.3)),
+    legend.text = element_text(size = rel(1.5)),
+    legend.title = element_blank(),
+    axis.title = element_text(size = rel(2))
+  )
+  print(plot)
+}
+```
+
+```{r}
+#Vectors for each node of original
+Time = c(1:nrow(gold))
+node = 1
+  
+
+  Raw = gold[[node]]
+  Binary = discretized[[node]]
+  dfRaw = data.frame(Time, Raw)
+  dfbin = data.frame(Time, Binary)
+  df = data.frame(Time, Raw, Binary)
+  df = df %>% gather(datatype, Value, c(Raw, Binary))
+  plot = ggplot(df, aes(x = Time, y = Value)) + geom_point(aes(color=datatype), size=rel(6.5), alpha=1) + geom_vline(xintercept = 2:9) + geom_line(data=dfRaw, aes(x=Time, y=Raw), color="blue") + geom_line(data=dfbin, aes(x=Time, y=Binary), color="red") + geom_area(data=dfRaw, aes(x=Time, y=Raw), alpha=0.5, fill="blue") + geom_area(data=dfbin, aes(x=Time, y=Binary), alpha=0.5, fill="red") + ylim(ymin, ymax) + scale_x_continuous(breaks=seq(1,alpha,1)) + scale_y_continuous(breaks=seq(0,1,0.5)) +
+  theme(
+    axis.text = element_text(size = rel(3.3)),
+    legend.text = element_text(size = rel(3.3)),
+    legend.title = element_blank(),
+    axis.title = element_text(size = rel(3.3)),
+    legend.position = "bottom"
+  )
+  plot
+```

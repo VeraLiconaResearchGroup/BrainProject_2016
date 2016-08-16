@@ -1,5 +1,5 @@
 ---
-title: "csv to latex"
+title: "Convert CSV table to LaTeX table code"
 author: "Tiffany Jann"
 date: "July 8, 2016"
 output: html_document
@@ -9,23 +9,22 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-<!-- Don't edit in between this line and the one below -->
 ```{r include=FALSE}
-## Don't delete this chunk if you are using the DataComputing package
 options(scipen=999)
 library(xtable)
 library(DataComputing)
 ```
-<!-- Don't edit the material above this line -->
+
+Useful when writing papers in LaTeX. Assign the path of your CSV file to `filename`, and assign your desired output file name to `outputname`.
 
 ```{r}
-filename = "sampleinferencemethodoutput.csv"
+filename = "/Users/jann/github/BrainProject_2016/ConsensusNetworks/WeightedSumsAUCACC.csv"
+
+outputname = "output.tex"
 ```
 
 ```{r}
 table = read.csv(filename, header=FALSE)
 table
-print(xtable(table, digits=4), type="latex", include.rownames=FALSE, file="output.tex")
+print(xtable(table, digits=4), type="latex", include.rownames=FALSE, file=outputname)
 ```

@@ -15,7 +15,7 @@ if exist(datafile,'file')
         prevar = load(datafile);
         if isstruct(prevar)
             fileprevar=fieldnames(prevar);
-            iLFP=strncmpi(fileprevar,'LFP',3);
+            iLFP=strncmpi(fileprevar,'LFP',3); % compare vector of string 'Params''Connectivity' 'LFP' to 'LFP'
             if ~isempty(find(strncmpi(fileprevar,'LFP',1)==1,1))
                 lfp = prevar.(char(fileprevar(iLFP)));
                 
